@@ -1,4 +1,12 @@
 # Changing window focus
+
+
+## these make it work with float layout
+#alt - h : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+
+#asdalkdjaskljalt - l : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+
+# note this works with bsp layout only due to computation
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - h : yabai -m window --focus west
@@ -7,6 +15,10 @@ alt - l : yabai -m window --focus east
 # Change focus between external displays (left and right)
 alt - s: yabai -m display --focus west
 alt - g: yabai -m display --focus east
+
+
+# split horizontally
+alt - v : yabai -m window --toggle split
 
 # Modifying the layout
 
@@ -20,7 +32,6 @@ shift + alt - y : yabai -m space --mirror y-axis
 shift + alt - x : yabai -m space --mirror x-axis
 
 # toggle window float
-
 shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # Modifying window size
@@ -28,7 +39,7 @@ shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 # maximize a window
 shift + alt - m : yabai -m window --toggle zoom-fullscreen
 
-# balance out tree of windows (resize to occupy same area - pretty much like <C-=> in vi) 
+# balance out tree of windows (resize to occupy same area - pretty much like <C-w>= in vi) 
 shift + alt - e : yabai -m space --balance
 
 
@@ -37,6 +48,12 @@ shift + alt - j : yabai -m window --swap south
 shift + alt - k : yabai -m window --swap north
 shift + alt - h : yabai -m window --swap west
 shift + alt - l : yabai -m window --swap east
+
+# Moving windows aronud
+shift + alt + ctrl - j : yabai -m window yabai -m window --resize bottom:0:50; yabai -m window --resize top:0:50
+shift + alt + ctrl - k : yabai -m window --resize top:0:-50; yabai -m window --resize bottom:0:-50
+shift + alt + ctrl - h : yabai -m window --resize right:-50:0; yabai -m window --resize left:-50:0;
+shift + alt + ctrl - l : yabai -m window --resize right:50:0; yabai -m window --resize left:50:0;
 
 # move window and split
 ctrl + alt - j : yabai -m window --warp south
